@@ -27,6 +27,7 @@ class HashMap {
       if (foundIndex === null) bucket.append(key, value);
       else bucket.at(foundIndex).value = value;
     }
+    this.changeCapacity();
     console.log(bucket.toString())
   }
 
@@ -85,6 +86,31 @@ class HashMap {
     return valuesArray;
   }
 
+  entries() {
+    let nodesArray = [];
+    this.bucketArray.forEach((lList) => {
+      for (let i = 0; i < lList.size(); i++) {
+        nodesArray.push([lList.at(i).key, lList.at(i).value]);
+      }
+    })
+    return nodesArray;
+  }
+
+  changeCapacity() {
+    if (this.length() >= this.capacity * this.loadFactor) {
+      this.capacity = this.capacity * 2;
+      const oldArray = [...this.bucketArray];
+      this.bucketArray = new Array(this.capacity).fill(null).map(() => new LinkedList());
+      for (const bucket of oldArray) {
+        let node = bucket.head();
+        while (node) {
+          this.set(node.key, node.value);
+          node = node.nextNode;
+        }
+      }
+    }
+  }
+
 }
 
 
@@ -100,13 +126,18 @@ hashMap.set("simmi3", "prova");
 hashMap.set("simmi4", "prova");
 hashMap.set("simmi5", "prova");
 hashMap.set("simmi6", "prova");
+hashMap.set("simmi7", "prova");
+hashMap.set("simmi8", "prova");
+hashMap.set("simmi9", "prova");
 console.log(hashMap.has("camila"));
 console.log(hashMap.has("bobobo"));
 console.log(hashMap.get("simmi"));
 console.log(hashMap.get("awe"));
 // console.log(hashMap.remove("simmi"));
 // console.log(hashMap.remove("camila"));
-console.log(hashMap.length());
-console.log(hashMap.keys());
-console.log(hashMap.values());
-// console.log(hashMap.bucketArray);
+console.log(hashMap.length(), hashMap.loadFactor * hashMap.capacity)
+// console.log(hashMap.length());
+// console.log(hashMap.keys());
+// console.log(hashMap.values());
+// console.log(hashMap.entries());
+console.log(hashMap.bucketArray);

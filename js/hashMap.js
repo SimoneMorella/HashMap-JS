@@ -19,9 +19,42 @@ class HashMap {
   }
 
   set(key, value) {
-    const hashOutput = hash(key);
-    if (this.bucketArray[hashOutput].size() !== 0) {
-      // problem with key value pair in adding a node (node should have 2 stuff but then I have to change everything... maybe I can modify it later)
+    const hashOutput = this.hash(key);
+    const bucket = this.bucketArray[hashOutput];
+    if (bucket.size() === 0) {
+      bucket.append(key, value);
+    } else {
+      let foundIndex = bucket.findKey(key);
+      if (foundIndex === null) bucket.append(key, value);
+      else bucket.at(foundIndex).value = value;
     }
+    console.log(bucket.toString())
   }
+
+  has(key) {
+    const hashOutput = this.hash(key);
+    const bucket = this.bucketArray[hashOutput];
+    return bucket.findKey(key) !== null ? true : false;
+  }
+
+  get(key) {
+    if (this.has(key) === false) return null; 
+    const hashOutput = this.hash(key);
+    const bucket = this.bucketArray[hashOutput];
+    const foundIndex = bucket.findKey(key);
+    return bucket.at(foundIndex).value;
+  }
+
+
 }
+
+
+const hashMap = new HashMap();
+
+hashMap.set("simmi", "bellix");
+hashMap.set("camila", "bellixima");
+hashMap.set("simmi", "bellixximixximo");
+console.log(hashMap.has("camila"));
+console.log(hashMap.has("bobobo"));
+console.log(hashMap.get("simmi"));
+console.log(hashMap.get("awe"));

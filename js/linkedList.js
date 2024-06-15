@@ -5,19 +5,19 @@ export default class LinkedList {
     this.linkedHead = null;
   }
 
-  prepend(value) {
+  prepend(key, value) {
     let temp = null;
     if (this.linkedHead !== null) temp = this.linkedHead;
-    this.linkedHead = new Node(value);
+    this.linkedHead = new Node(key, value);
     this.linkedHead.nextNode = temp;
   }
 
-  append(value) {
-    if (this.linkedHead === null) this.prepend(value);
+  append(key, value) {
+    if (this.linkedHead === null) this.prepend(key, value);
     else {
       let temp = this.linkedHead;
       while (temp.nextNode !== null) temp = temp.nextNode;
-      temp.nextNode = new Node(value);
+      temp.nextNode = new Node(key, value);
     }
   }
 
@@ -69,6 +69,15 @@ export default class LinkedList {
     return false;
   }
 
+  containsKey(key) {
+    let temp = this.linkedHead;
+    while (temp.nextNode !== null) {
+        if (temp.key === key) return true;
+        temp = temp.nextNode;
+    }
+    return false;
+  }
+
   find(value) {
     let temp = this.linkedHead;
     let index = 0;
@@ -80,22 +89,33 @@ export default class LinkedList {
     return null;
   }
 
+  findKey(key) {
+    let temp = this.linkedHead;
+    let index = 0;
+    while (temp !== null) {
+        if (temp.key === key) return index;
+        temp = temp.nextNode;
+        index++;
+    }
+    return null;
+  }
+
   toString() {
     let temp = this.linkedHead;
     let string = "";
     while (temp !== null) {
-        string += `(${temp.value}) ->`;
+        string += `(${temp.key}:${temp.value}) ->`;
         temp = temp.nextNode;
     }
     return(string += "null");
   }
 
-  insertAt(value, index) {
-    if (this.linkedHead === null) this.prepend(value);
+  insertAt(key, value, index) {
+    if (this.linkedHead === null) this.prepend(key, value);
     else {
         let curr = this.linkedHead;
         let prev = null;
-        let newNode = new Node(value);
+        let newNode = new Node(key, value);
         for (let i = 0; i < index; i++) {
             prev = curr;
             curr = curr.nextNode;

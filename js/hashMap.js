@@ -61,6 +61,30 @@ class HashMap {
     return count;
   }
 
+  clear() {
+    this.bucketArray = new Array(this.capacity).fill(null).map(() => new LinkedList());
+  }
+
+  keys() {
+    let keysArray = [];
+    this.bucketArray.forEach((lList) => {
+      for (let i = 0; i < lList.size(); i++) {
+        keysArray.push(lList.at(i).key);
+      }
+    })
+    return keysArray;
+  }
+
+  values() {
+    let valuesArray = [];
+    this.bucketArray.forEach((lList) => {
+      for (let i = 0; i < lList.size(); i++) {
+        valuesArray.push(lList.at(i).value);
+      }
+    })
+    return valuesArray;
+  }
+
 }
 
 
@@ -70,6 +94,12 @@ hashMap.set("simmi", "bellix");
 hashMap.set("camila", "bellixima");
 hashMap.set("simmi", "bellixximixximo");
 hashMap.set("tamana", "halooo");
+hashMap.set("simmi1", "prova");
+hashMap.set("simmi2", "prova");
+hashMap.set("simmi3", "prova");
+hashMap.set("simmi4", "prova");
+hashMap.set("simmi5", "prova");
+hashMap.set("simmi6", "prova");
 console.log(hashMap.has("camila"));
 console.log(hashMap.has("bobobo"));
 console.log(hashMap.get("simmi"));
@@ -77,4 +107,6 @@ console.log(hashMap.get("awe"));
 // console.log(hashMap.remove("simmi"));
 // console.log(hashMap.remove("camila"));
 console.log(hashMap.length());
-console.log(hashMap.bucketArray);
+console.log(hashMap.keys());
+console.log(hashMap.values());
+// console.log(hashMap.bucketArray);

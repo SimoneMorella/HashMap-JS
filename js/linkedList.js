@@ -135,7 +135,8 @@ export default class LinkedList {
         curr = curr.nextNode;
         if (curr === null) return "No item at the selected index";
     }
-    prev.nextNode = curr.nextNode;
+    if (index !== 0) prev.nextNode = curr.nextNode;
+    else this.linkedHead = null;
   }
 
 }
